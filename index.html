@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DragSVG</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <style>
+    body { background-color: #fafafa; font-family: 'Google Sans', sans-serif; }
+    .container { max-width: 960px; margin-top: 3rem; margin-bottom: 3rem; }
+    .result-media { 
+      border-radius: 8px; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+      width: 100%;
+      display: block;
+    }
+    .caption { margin-top: 0.0rem; font-size: 0.75rem; font-weight: 500; color: #4a4a4a; text-align: center; }
+    .section-title { border-bottom: 2px solid #eee; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+    .figure-grid-item { margin-bottom: 0.0rem; }
+    .figure-grid-header { margin-bottom: 0; }
+    .figure-grid-header .caption { margin-top: 0; }
+    .figure-grid-tight { margin-top: -0.25rem; }
+    .figure-grid-tight > .column { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+    .overlay-card { position: relative; }
+    .overlay-thumb {
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      width: 40%;
+      max-width: 150px;
+      min-width: 40px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      background: #fff;
+      z-index: 2;
+    }
+    hr { background-color: #eee; margin: 3rem 0; }
+  </style>
+</head>
+<body>
+
+  <div class="container px-3">
+    <h1 class="title is-3 has-text-centered">DragSVG: Learning to Animate Vector Graphics from User Drags</h1>
+
+    <div class="buttons is-centered mt-4">
+      <a href="#fig1" class="button is-light is-rounded is-small">Figure R1</a>
+      <a href="#fig2" class="button is-small is-rounded is-light">Figure R2</a>
+      <a href="#fig3" class="button is-small is-rounded is-light">Figure R3</a>
+      <a href="#fig4" class="button is-small is-rounded is-light">Figure R4</a>
+    </div>
+
+    <hr>
+
+    <div id="fig1" class="section-content">
+      <h2 class="title is-4 section-title">Figure R1: DragSVG vs. Drag-based Video Models and SVG Animation Methods on Vector-Prism Dataset.</h2>
+      <div class="columns is-variable is-2 is-multiline is-mobile figure-grid-tight">
+        <div class="column is-2 figure-grid-item figure-grid-header">
+          <div class="caption">SVG Input</div>
+        </div>
+        <div class="column is-2 figure-grid-item figure-grid-header">
+          <div class="caption">DragAnything</div>
+        </div>
+        <div class="column is-2 figure-grid-item figure-grid-header">
+          <div class="caption">MotionPro</div>
+        </div>
+        <div class="column is-2 figure-grid-item figure-grid-header">
+          <div class="caption">AniClipart</div>
+        </div>
+        <div class="column is-2 figure-grid-item figure-grid-header">
+          <div class="caption">Vector Prism</div>
+        </div>
+        <div class="column is-2 figure-grid-item figure-grid-header">
+          <div class="caption">DragSVG (Ours)</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/input/fish-svgrepo-com_tracking.png" class="result-media">
+          <!-- <div class="caption">Row 1 - Static</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/draganything/fish.gif" class="result-media">
+          <!-- <div class="caption">Row 1 - GIF 1</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/motionpro/fish.gif" class="result-media">
+          <!-- <div class="caption">Row 1 - GIF 2</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/aniclipart/fish.gif" class="result-media">
+          <div class="caption">"A fish is blowing bubbles, and they are floating up slowly."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/vp/fish_animation16.gif" class="result-media">
+          <div class="caption">"Can you animate this SVG file? I want the fish to blow bubbles and have them float up slowly."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/dragsvg/fish_gif_iter500.gif" class="result-media">
+          <!-- <div class="caption">Row 1 - GIF 5</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/input/bird-svgrepo-com_tracking.png" class="result-media">
+          <!-- <div class="caption">Row 2 - Static</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/draganything/bird.gif" class="result-media">
+          <!-- <div class="caption">Row 2 - GIF 1</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/motionpro/bird.gif" class="result-media">
+          <!-- <div class="caption">Row 2 - GIF 2</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/aniclipart/bird_gif_iter500.gif" class="result-media">
+          <div class="caption">"A bird is wagging its tail."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/vp/bird_animation16.gif" class="result-media">
+          <div class="caption">"Can you animate this SVG file? I want the bird to wag its tail."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/dragsvg/bird_gif_iter500.gif" class="result-media">
+          <!-- <div class="caption">Row 2 - GIF 5</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/input/correct-success-tick-svgrepo-com_tracking.png" class="result-media">
+          <!-- <div class="caption">Row 3 - Static</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/draganything/correct.gif" class="result-media">
+          <!-- <div class="caption">Row 3 - GIF 1</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/motionpro/correct.gif" class="result-media">
+          <!-- <div class="caption">Row 3 - GIF 2</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/aniclipart/correct.gif" class="result-media">
+          <div class="caption">"An checkmark icon is floating upward."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/vp/correct_animation16.gif" class="result-media">
+          <div class="caption">"Can you animate this SVG file? I want the checkmark icon to float upward."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/dragsvg/correct_gif_iter500.gif" class="result-media">
+          <!-- <div class="caption">Row 3 - GIF 5</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/input/html-5-svgrepo-com_tracking.png" class="result-media">
+          <!-- <div class="caption">Row 4 - Static</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/draganything/html-5.gif" class="result-media">
+          <!-- <div class="caption">Row 4 - GIF 1</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/motionpro/html-5.gif" class="result-media">
+          <!-- <div class="caption">Row 4 - GIF 2</div> -->
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/aniclipart/html-5.gif" class="result-media">
+          <div class="caption">"An HTML5 logo is bouncing up and down."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/vp/html_animation16.gif" class="result-media">
+          <div class="caption">"Can you animate this SVG file? I want the HTML5 logo to bounce up and down."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/vp_cases/dragsvg/html_gif_iter500.gif" class="result-media">
+          <!-- <div class="caption">Row 4 - GIF 5</div> -->
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div id="fig2" class="section-content">
+      <h2 class="title is-4 section-title">Figure R2(a): DragSVG vs. Drag-based Video Models and SVG Animation Methods on AniClipart Dataset.</h2>
+      <div class="columns is-variable is-2 is-multiline is-mobile figure-grid-tight">
+        <div class="column is-2 figure-grid-item figure-grid-header">
+          <div class="caption">SVG Input</div>
+        </div>
+        <div class="column is-2 figure-grid-item figure-grid-header">
+          <div class="caption">DragAnything</div>
+        </div>
+        <div class="column is-2 figure-grid-item figure-grid-header">
+          <div class="caption">MotionPro</div>
+        </div>
+        <div class="column is-2 figure-grid-item figure-grid-header">
+          <div class="caption">AniClipart</div>
+        </div>
+        <div class="column is-2 figure-grid-item figure-grid-header">
+          <div class="caption">Vector Prism</div>
+        </div>
+        <div class="column is-2 figure-grid-item figure-grid-header">
+          <div class="caption">DragSVG (Ours)</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/input/kite_tracking.png" class="result-media">
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/draganything/kite.gif" class="result-media">
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/motionpro/kite.gif" class="result-media">
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/aniclipart/kite.gif" class="result-media">
+          <div class="caption">"A kite is swaying its tail gently and fluttering its sails."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/vector_prism/kite.gif" class="result-media">
+          <div class="caption">"Can you animate this SVG file? I want the kite's tail to sway gently and the character's sails to flutter."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/ours/kite.gif" class="result-media">
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/input/man_demon_tracking.png" class="result-media">
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/draganything/demon.gif" class="result-media">
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/motionpro/demon.gif" class="result-media">
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/aniclipart/demon.gif" class="result-media">
+          <div class="caption">"A demon man is waving his arms and wagging his tail."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/vector_prism/demon.gif" class="result-media">
+          <div class="caption">"Can you animate this SVG file? I want the man to wave his arms and wag his tail."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/ours/demon.gif" class="result-media">
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/input/man_rap.png" class="result-media">
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/draganything/man_rap.gif" class="result-media">
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/motionpro/man_rap.gif" class="result-media">
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/aniclipart/man_rap.gif" class="result-media">
+          <div class="caption">"A man is swinging his arms and nodding his head."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/vector_prism/man_rap.gif" class="result-media">
+          <div class="caption">"Can you animate this SVG file? I want the man to swing his arms and nod his head."</div>
+        </div>
+        <div class="column is-2 figure-grid-item">
+          <img src="assets/ani_cases/ours/man_rap.gif" class="result-media">
+        </div>
+      </div>
+
+      <h2 class="title is-4 section-title mt-6">Figure R2(b): More Results on AniClipart Dataset</h2>
+      <div class="columns is-variable is-1 is-mobile">
+        <div class="column is-one-fifth">
+          <div class="overlay-card">
+            <img src="assets/more/bird3_tracking.png" class="overlay-thumb">
+            <img src="assets/more/bird3.gif" class="result-media">
+          </div>
+          <!-- <div class="caption">Scenario 1</div> -->
+        </div>
+        <div class="column is-one-fifth">
+          <div class="overlay-card">
+            <img src="assets/more/camel_tracking.png" class="overlay-thumb">
+            <img src="assets/more/camel.gif" class="result-media">
+          </div>
+          <!-- <div class="caption">Scenario 2</div> -->
+        </div>
+        <div class="column is-one-fifth">
+          <div class="overlay-card">
+            <img src="assets/more/crab_tracking.png" class="overlay-thumb">
+            <img src="assets/more/crab.gif" class="result-media">
+          </div>
+          <!-- <div class="caption">Scenario 3</div> -->
+        </div>
+        <div class="column is-one-fifth">
+          <div class="overlay-card">
+            <img src="assets/more/demon_tracking.png" class="overlay-thumb">
+            <img src="assets/more/demon.gif" class="result-media">
+          </div>
+          <!-- <div class="caption">Scenario 4</div> -->
+        </div>
+        <div class="column is-one-fifth">
+          <div class="overlay-card">
+            <img src="assets/more/man_boxing2_tracking.png" class="overlay-thumb">
+            <img src="assets/more/man_boxing2.gif" class="result-media">
+          </div>
+          <!-- <div class="caption">Scenario 5</div> -->
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div id="fig3" class="section-content">
+      <h2 class="title is-4 section-title">Figure R3: Automatic Segmentation Results</h2>
+      <div class="columns is-variable is-2 is-multiline">
+        <div class="column is-12">
+          <img src="assets/segmentation_figures/figure_segmentation_a.png" class="result-media">
+          <div class="caption">(a) Pixel Space Segmentation</div>
+        </div>
+        <div class="column is-12">
+          <img src="assets/segmentation_figures/figure_segmentation_b.png" class="result-media">
+          <div class="caption">(b) VLM Semantic for Vector Space Segmentation</div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div id="fig4" class="section-content">
+      <h2 class="title is-4 section-title">Figure R4: Animation result with 10 distinct drag trajectories.</h2>
+      <div class="columns is-variable is-2 is-multiline">
+        <div class="column is-3">
+          <img src="assets/drag_10/octopus_tracking.png" class="result-media">
+          <div class="caption">Input</Input></div>
+        </div>
+        <div class="column is-3">
+          <img src="assets/drag_10/octopus.gif" class="result-media">
+          <div class="caption">Result</div>
+        </div>
+        <div class="column is-3">
+          <img src="assets/drag_10/woman_jump_tracking.png" class="result-media">
+          <div class="caption">Input</div>
+        </div>
+        <div class="column is-3">
+          <img src="assets/drag_10/woman_jump.gif" class="result-media">
+          <div class="caption">Result</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
